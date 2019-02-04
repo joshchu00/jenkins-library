@@ -14,9 +14,17 @@ def call(body) {
         git url: config.gitURL, branch: config.gitBranch
       }
       stage('Project Build') {
-        docker.image(config.buildImage).inside {
-          sh 'yarn'
-          sh 'yarn build'
+        switch (config.buildLanguage) {
+          case 'go': 
+            break
+          case 'react': 
+            docker.image(config.buildImage).inside {
+              sh 'yarn'
+              sh 'yarn build'
+            }
+            break
+          default:
+            break
         }
       }
       stage('Docker Build') {
