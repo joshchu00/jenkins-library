@@ -15,7 +15,10 @@ def call(body) {
       }
       stage('Project Build') {
         switch (config.buildLanguage) {
-          case 'go': 
+          case 'go':
+            docker.image(config.buildImage).inside {
+              sh 'go build -a -o main'
+            }
             break
           case 'react': 
             docker.image(config.buildImage).inside {
