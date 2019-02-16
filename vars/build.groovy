@@ -38,6 +38,15 @@ def call(body) {
           image.push()
         }
       }
+      stage('Downstream') {
+        switch (config.downstreamJob) {
+          case '':
+            break
+          default:
+            build job: config.downstreamJob
+            break
+        }
+      }
     }
   }
 }
